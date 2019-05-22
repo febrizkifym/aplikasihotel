@@ -12,7 +12,7 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="p_logout.php">
+                            <a href="../p_logout.php">
                                 <p>Log out</p>
                             </a>
                         </li>

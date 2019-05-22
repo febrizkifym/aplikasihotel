@@ -1,4 +1,4 @@
-<div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
+<div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-5.jpg">
 
     <!--
 
@@ -9,32 +9,32 @@
 
     	<div class="sidebar-wrapper">
             <div class="logo">
-                <a href="http://www.creative-tim.com" class="simple-text">
+                <a href="../http://www.creative-tim.com" class="simple-text">
                     Admin Dashboard
                 </a>
             </div>
 
             <ul class="nav">
                 <li>
-                    <a href="index.php">
+                    <a href="../index.php">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
                 <li>
-                    <a href="transaksi/index.php">
+                    <a href="../transaksi/index.php">
                         <i class="pe-7s-upload"></i>
                         <p>Transaksi</p>
                     </a>
                 </li>
                 <li>
-                    <a href="pengunjung/index.php">
+                    <a href="../pengunjung/index.php">
                         <i class="pe-7s-add-user"></i>
                         <p>Data Pengunjung</p>
                     </a>
                 </li>
                 <li>
-                    <a href="kamar/index.php">
+                    <a href="../kamar/index.php">
                         <i class="pe-7s-lock"></i>
                         <p>Data Kamar</p>
                     </a>
