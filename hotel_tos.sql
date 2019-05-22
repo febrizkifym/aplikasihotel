@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2019 at 10:40 AM
+-- Generation Time: May 20, 2019 at 06:21 AM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -25,38 +25,23 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail_transaksi`
---
-
-CREATE TABLE `detail_transaksi` (
-  `id_dtl_transaksi` int(10) NOT NULL,
-  `no_transaksi` int(10) NOT NULL,
-  `no_kamar` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `kamar`
 --
 
 CREATE TABLE `kamar` (
-  `no_kamar` int(10) NOT NULL,
-  `jns_kamar` varchar(20) NOT NULL,
-  `hrga_kamar` int(20) NOT NULL
+  `id_kamar` int(11) NOT NULL,
+  `jenis_kamar` varchar(50) NOT NULL,
+  `harga` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `karyawan`
+-- Dumping data for table `kamar`
 --
 
-CREATE TABLE `karyawan` (
-  `id_karyawan` int(10) NOT NULL,
-  `nm_karyawan` varchar(30) NOT NULL,
-  `jns_kelamin` enum('Pria','Wanita') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `kamar` (`id_kamar`, `jenis_kamar`, `harga`) VALUES
+(1, 'Reguler', 250000),
+(2, 'VIP', 550000),
+(3, 'Bisnis', 850000);
 
 -- --------------------------------------------------------
 
@@ -65,13 +50,20 @@ CREATE TABLE `karyawan` (
 --
 
 CREATE TABLE `pengunjung` (
-  `id_pengujung` int(10) NOT NULL,
-  `nm_pengunjung` varchar(30) NOT NULL,
-  `alamat` varchar(20) NOT NULL,
-  `jns_kelamin` enum('Pria','Wanita') NOT NULL,
-  `no_tlp` varchar(20) NOT NULL,
-  `no_ktp` int(20) NOT NULL
+  `id_pengunjung` int(11) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `alamat` varchar(100) NOT NULL,
+  `jk` enum('Pria','Wanita') NOT NULL,
+  `no_telp` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pengunjung`
+--
+
+INSERT INTO `pengunjung` (`id_pengunjung`, `nama`, `alamat`, `jk`, `no_telp`) VALUES
+(1, 'Febrizki Mawikere', 'Jl. Rusli Datau', 'Pria', '085241141230'),
+(2, 'Selvi T Abjul', 'Pulubala', 'Wanita', '080324323232');
 
 -- --------------------------------------------------------
 
@@ -80,76 +72,108 @@ CREATE TABLE `pengunjung` (
 --
 
 CREATE TABLE `transaksi` (
-  `no_transaksi` int(11) NOT NULL,
-  `id_pengunjung` int(10) NOT NULL,
-  `id_karyawan` int(10) NOT NULL,
-  `jmlh_kamar` int(10) NOT NULL,
-  `tgl_masuk` date NOT NULL,
-  `tgl_keluar` date NOT NULL,
-  `lama_nginap` int(10) NOT NULL,
-  `total_harga` int(20) NOT NULL
+  `id_transaksi` int(11) NOT NULL,
+  `id_pengunjung` int(11) NOT NULL,
+  `id_kamar` int(11) NOT NULL,
+  `tgl_ci` date NOT NULL,
+  `tgl_co` date DEFAULT NULL,
+  `bayar` int(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `transaksi`
+--
+
+INSERT INTO `transaksi` (`id_transaksi`, `id_pengunjung`, `id_kamar`, `tgl_ci`, `tgl_co`, `bayar`) VALUES
+(7, 1, 1, '2019-05-20', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id_user` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id_user`, `username`, `password`) VALUES
+(1, 'admin', 'admin');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `detail_transaksi`
---
-ALTER TABLE `detail_transaksi`
-  ADD PRIMARY KEY (`id_dtl_transaksi`),
-  ADD KEY `no_transaksi` (`no_transaksi`),
-  ADD KEY `no_kamar` (`no_kamar`);
-
---
 -- Indexes for table `kamar`
 --
 ALTER TABLE `kamar`
-  ADD PRIMARY KEY (`no_kamar`);
-
---
--- Indexes for table `karyawan`
---
-ALTER TABLE `karyawan`
-  ADD PRIMARY KEY (`id_karyawan`);
+  ADD PRIMARY KEY (`id_kamar`);
 
 --
 -- Indexes for table `pengunjung`
 --
 ALTER TABLE `pengunjung`
-  ADD PRIMARY KEY (`id_pengujung`);
+  ADD PRIMARY KEY (`id_pengunjung`);
 
 --
 -- Indexes for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  ADD PRIMARY KEY (`no_transaksi`),
+  ADD PRIMARY KEY (`id_transaksi`),
   ADD KEY `id_pengunjung` (`id_pengunjung`),
-  ADD KEY `id_karyawan` (`id_karyawan`);
+  ADD KEY `id_kamar` (`id_kamar`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id_user`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `kamar`
+--
+ALTER TABLE `kamar`
+  MODIFY `id_kamar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `pengunjung`
+--
+ALTER TABLE `pengunjung`
+  MODIFY `id_pengunjung` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `transaksi`
+--
+ALTER TABLE `transaksi`
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `detail_transaksi`
+-- Constraints for table `transaksi`
 --
-ALTER TABLE `detail_transaksi`
-  ADD CONSTRAINT `detail_transaksi_ibfk_1` FOREIGN KEY (`id_dtl_transaksi`) REFERENCES `transaksi` (`no_transaksi`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `detail_transaksi_ibfk_2` FOREIGN KEY (`no_kamar`) REFERENCES `kamar` (`no_kamar`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `karyawan`
---
-ALTER TABLE `karyawan`
-  ADD CONSTRAINT `karyawan_ibfk_1` FOREIGN KEY (`id_karyawan`) REFERENCES `transaksi` (`id_karyawan`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `pengunjung`
---
-ALTER TABLE `pengunjung`
-  ADD CONSTRAINT `pengunjung_ibfk_1` FOREIGN KEY (`id_pengujung`) REFERENCES `transaksi` (`id_pengunjung`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `transaksi`
+  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_pengunjung`) REFERENCES `pengunjung` (`id_pengunjung`),
+  ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_kamar`) REFERENCES `kamar` (`id_kamar`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
